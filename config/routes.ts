@@ -41,6 +41,11 @@
         path: '/upload/studentInfoUpload',
         component: './upload/studentInfoUpload',
       },
+      {
+        name: '家长信息导入',
+        path: '/upload/patriarchUpload',
+        component: './upload/patriarchUpload',
+      },
     ],
   },
   {

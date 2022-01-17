@@ -41,8 +41,10 @@ export default defineConfig({
   manifest: {
     basePath: '/',
   },
-  base: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
-  publicPath: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
+  // base: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
+  // publicPath: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/tmxyBsAdmin/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/tmxyBsAdmin/' : '/',
   // Fast Refresh 热更新
   fastRefresh: {},
   nodeModulesTransform: { type: 'none' },

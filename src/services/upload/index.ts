@@ -39,3 +39,16 @@ export async function studentInfoUpload(body: API.studentInfoUploadParam, option
     ...(options || {}),
   });
 }
+
+export async function patriarchInfoUpload(body: API.studentInfoUploadParam, options?: { [key: string]: any }) {
+  const params: FormData = new FormData();
+  _.forIn(body, function(value, key) {
+    // @ts-ignore
+    return params.append(key, value);
+  });
+  return request<API.CommonRes>('api/v2/parent-import', {
+    method: 'POST',
+    data: params,
+    ...(options || {}),
+  });
+}

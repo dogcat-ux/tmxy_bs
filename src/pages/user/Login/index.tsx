@@ -93,8 +93,8 @@ const Login: React.FC = () => {
                   message: '密码是必填项！',
                 },
                 {
-                  pattern: /^\w{8,16}$/,
-                  message: '密码在8-16位内！',
+                  pattern: /^\w{6,16}$/,
+                  message: '密码在6-16位内！',
                 }
               ]}
             />

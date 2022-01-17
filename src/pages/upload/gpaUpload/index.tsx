@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Button, Card, DatePicker, Form, message, Select } from 'antd';
+import { Breadcrumb, Button, Card, DatePicker, Form, Modal, Select } from 'antd';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { FileProps } from '@/pages/upload/constants';
@@ -10,7 +10,6 @@ import { Code } from '@/types';
 const { Dragger } = Upload;
 const GpaUpload: React.FC = () => {
   const normFile = (e: any) => { //如果是typescript, 那么参数写成 e: any
-    console.log('Upload event:', e);
     if (Array.isArray(e)) {
       return e;
     }
@@ -18,21 +17,26 @@ const GpaUpload: React.FC = () => {
   };
 
   const onFinish = debounce(async (values: any) => {
-    console.log('valuesvaluesvalues', values);
     const res = await gpaUpload({
       year: values.year.year().toString(),
       semester: values.year.year().toString() + values.semester,
       file: values?.file[0]?.originFileObj,
     });
     if (res?.status === Code.SuccessCode) {
-      message.success('提交成功！');
+      Modal.success({
+        content: '提交成功',
+      });
     } else {
-      message.success('提交失败！');
+      Modal.error({
+        content: res?.msg || '提交失败',
+      });
     }
   }, 16);
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
-    message.error('提交失败！' + errorInfo?.errorFields[0].errors);
+    Modal.error({
+      content: '提交失败' + errorInfo?.errorFields[0].errors,
+    });
   };
 
   return (

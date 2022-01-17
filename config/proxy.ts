@@ -11,6 +11,7 @@ export default {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
     '/apl/': {
       // 要代理的地址
+      // target: 'http://1.12.252.83:3000/',
       target: 'http://139.9.196.99:3000/',
       // target: 'https://preview.pro.ant.design',
       // 配置了这个可以从 http 代理到 https

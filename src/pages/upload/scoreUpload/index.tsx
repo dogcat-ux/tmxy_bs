@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Card, DatePicker, message, Upload, Select } from 'antd';
+import { Breadcrumb, Card, DatePicker,  Upload, Select, Modal } from 'antd';
 import { Form, Button } from 'antd';
 // import { Code } from '@/types';
 import { scoreUpload } from '@/services/upload';
@@ -27,15 +27,21 @@ const ScoreUpload: React.FC = () => {
       file: values?.file[0]?.originFileObj,
     });
     if (res.status === Code.SuccessCode) {
-      message.success('提交成功！');
+      Modal.success({
+        content: '提交成功',
+      });
     } else {
-      message.success('提交失败！');
+      Modal.error({
+        content: res?.msg || '提交失败',
+      });
     }
   }, 16);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
-    message.error('提交失败！' + errorInfo?.errorFields[0].errors);
+    Modal.error({
+      content: '提交失败' + errorInfo?.errorFields[0].errors,
+    });
   };
   return (
     <>

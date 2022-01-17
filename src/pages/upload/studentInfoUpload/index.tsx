@@ -1,5 +1,5 @@
 import React from 'react';
-import { Breadcrumb, Button, Card, Col, Form, message, Row } from 'antd';
+import { Breadcrumb, Button, Card, Col, Form, Modal, Row } from 'antd';
 import { Upload } from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import { debounce } from 'lodash';
@@ -22,15 +22,21 @@ const ScoreUpload: React.FC = () => {
       file: values?.file[0]?.originFileObj,
     });
     if (res.status === Code.SuccessCode) {
-      message.success('提交成功！');
+      Modal.success({
+        content: '提交成功',
+      });
     } else {
-      message.success('提交失败！');
+      Modal.error({
+        content: res?.msg || '提交失败',
+      });
     }
   }, 16);
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
-    message.error('提交失败！' + errorInfo?.errorFields[0].errors);
+    Modal.error({
+      content: '提交失败' + errorInfo?.errorFields[0].errors,
+    });
   };
   return (
     <>
@@ -53,7 +59,7 @@ const ScoreUpload: React.FC = () => {
             valuePropName="fileList"
             // 如果没有下面这一句会报错
             getValueFromEvent={normFile}
-            rules={[{ required: true, message: '请上传学生成绩文件！' }]}
+            rules={[{ required: true, message: '请上传文件！' }]}
           >
             {/*<ExcelUpload/>*/}
             <Dragger {...FileProps}>
