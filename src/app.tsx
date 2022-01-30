@@ -4,6 +4,7 @@ import type { RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/rightContent';
 import Footer from '@/components/footer';
+import { RequestConfig } from 'umi';
 
 const loginPath = '/user/login';
 
@@ -53,4 +54,19 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     menuHeaderRender: undefined,
     ...initialState?.settings,
   };
+};
+
+
+export const request: RequestConfig = {
+  errorConfig: {
+    adaptor: (resData) => {
+      // resData 是我们自己的数据
+      return {
+        ...resData,
+        total: resData?.data?.total,
+        success: resData?.msg,
+        errorMessage: resData?.error,
+      };
+    },
+  },
 };

@@ -43,8 +43,8 @@ export default defineConfig({
   },
   // base: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
   // publicPath: process.env.NODE_ENV === 'production' ? '/admin/' : '/',
-  base: process.env.NODE_ENV === 'production' ? '/tmxyBsAdmin/' : '/',
-  publicPath: process.env.NODE_ENV === 'production' ? '/tmxyBsAdmin/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/tmxyAdminBackstage/' : '/',
+  publicPath: process.env.NODE_ENV === 'production' ? '/tmxyAdminBackstage/' : '/',
   // Fast Refresh 热更新
   fastRefresh: {},
   nodeModulesTransform: { type: 'none' },
