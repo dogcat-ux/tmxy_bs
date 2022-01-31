@@ -1,8 +1,9 @@
 /* eslint-disable */
-import request  from '../index';
+import request from '../index';
 import _ from 'lodash';
 import scoreDetailRes from '@/services/userCentre/data';
 import scoreDetailParam from '@/services/userCentre/data';
+
 // import request as rq from "umi"
 
 export async function personCenter(body: API.personCenterParam, options?: { [key: string]: any }) {
@@ -172,6 +173,20 @@ export async function activityByCategory(body: { category: string }, options?: {
   });
   // @ts-ignore
   return request<API.activityByCategoryRes>('/api/v2/activity-category', {
+    method: 'POST',
+    data: params,
+    ...(options || {}),
+  });
+}
+
+export async function exportActivityDetail(body: API.exportActivityDetailParam, options?: { [key: string]: any }) {
+  let params = new FormData();
+  _.forIn(body, function(value, key) {
+    // @ts-ignore
+    return params.append(key, value);
+  });
+  // @ts-ignore
+  return request<API.commonRes>('/api/v2/export-activity-detail', {
     method: 'POST',
     data: params,
     ...(options || {}),

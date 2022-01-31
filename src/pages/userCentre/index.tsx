@@ -131,13 +131,27 @@ const UserCenter = () => {
     feedBack(res, '修改成功', '修改失败');
     sendApi();
   };
+  // const exportClick = async () => {
+  //   // await exportActivityDetail({
+  //   //   grade: string
+  //   //   year_start_time_stamp?: number
+  //   //   year_end_time_stamp?: number
+  //   //   semester_start_time_stamp?: number
+  //   //   semester_end_time_stamp?: number
+  //   //   info?: string
+  //   //   page_size?: number
+  //   //   page_num?: number
+  //   //   total?: number// 1 表示导出所有 0 表示导出该页
+  //   // });
+  // };
+
   useEffect(() => {
     sendApi();
   }, []);
   return (
     <PageContainer>
       <Card>
-        <CommonRow sendApi={sendApi}/>
+        <CommonRow sendApi={sendApi} isExport={true}/>
         <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={sendApi}
                      body={timeInfo ? { time_stamp: timeInfo } : null}
                      onAmend={(record) => {

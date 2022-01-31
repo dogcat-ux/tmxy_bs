@@ -136,4 +136,16 @@ declare namespace API {
     activity_id?: number,
     activity_name?: string
   };
+
+  type exportActivityDetailParam = {
+    grade?: string
+    year_start_time_stamp?: number
+    year_end_time_stamp?: number
+    semester_start_time_stamp?: number
+    semester_end_time_stamp?: number
+    info?: string
+    page_size?: number
+    page_num?: number
+    total?: number// 1 表示导出所有 0 表示导出该页
+  };
 }
