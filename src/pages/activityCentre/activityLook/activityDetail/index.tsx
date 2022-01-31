@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import {
   Card,
-  Col,
+  Col, InputNumber,
   Pagination,
   Popconfirm,
   Row,
@@ -10,25 +10,18 @@ import {
 } from 'antd';
 
 import { dateChange } from '@/utils/dateChange';
-import _ from 'lodash';
-import { useModel } from '@@/plugin-model/useModel';
 import { PageContainer } from '@ant-design/pro-layout';
 import { useHistory } from 'umi';
 
-export type TableListItem = {
-  activity_name?: string
-  category_name?: string
-  publisher_number?: string
-  publisher_name?: string
-  sign_up_start_time?: number
-  sign_up_end_time?: number
-  activity_start_time?: number
-  activity_end_time?: number
-  status?: number
-};
 import { Input, Space } from 'antd';
+import CommonSearch from '@/components/CommonSearch';
+import UpLoadFile from '@/components/upLoadFile';
+import AddForm from '@/components/addForm';
+import { extraAddParam } from '@/services/extraAdd/data';
+import feedBack from '@/utils/apiFeedback';
+import { activityDetailUpload, creatActivityDetail, deleteActivityDetail } from '@/services/activityDetail';
+import { useModel } from '@@/plugin-model/useModel';
 
-const { Search } = Input;
 const ActivityDetail = () => {
   const history = useHistory();
   // @ts-ignore
@@ -36,7 +29,7 @@ const ActivityDetail = () => {
   const activity = query;
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
-  const { pageSize, getDetailList, current, total, dataSource, loading, setCurrent, setPageSize, setSearch } = useModel('detailCommon');
+  const { pageSize, getDetailList, current, total, dataSource, loading, setCurrent, setPageSize } = useModel('detailCommon');
   const columns = [
     {
       title: '学号',
@@ -85,9 +78,11 @@ const ActivityDetail = () => {
       render: (record: API.ActivityDetailListRes) => (
         <Space size="middle">
           <Popconfirm
-            title="Are you sure to delete this user?"
-            onConfirm={() => {
-              // deleteClick(record);
+            title="确定要删除吗?"
+            onConfirm={async () => {
+              feedBack(await deleteActivityDetail(record?.activity_detail_id), '删除成功', '删除失败');
+              // eslint-disable-next-line @typescript-eslint/no-use-before-define
+              await sendApi();
             }}
             okText="Yes"
             cancelText="No"
@@ -114,14 +109,14 @@ const ActivityDetail = () => {
       page_size: ps || firstPageSize,
     });
   };
-  const onSearch = (value: string) => {
-    setSearch(value);
-    if (value) {
-      sendApi({ info: value });
-    } else {
-      sendApi();
-    }
-  };
+  // const onSearch = (value: string) => {
+  //   setSearch(value);
+  //   if (value) {
+  //     sendApi({ info: value });
+  //   } else {
+  //     sendApi();
+  //   }
+  // };
   useEffect(() => {
     console.log(query);
     Promise.all([sendApi()]);
@@ -140,6 +135,25 @@ const ActivityDetail = () => {
       breadcrumbName: activity?.activity_name,
     },
   ];
+  const AddForms = [
+    {
+      label: '学号',
+      name: 'stu_number',
+      rules: [{ required: true }],
+      children: <Input/>,
+    },
+    {
+      label: '得分',
+      name: 'score',
+      rules: [{ required: true }],
+      children: <InputNumber/>,
+    },
+  ];
+  const onAddSubmit = async (data: extraAddParam) => {
+    const res = await creatActivityDetail({ ...data, activity_id: query?.activity_id });
+    feedBack(res, '增加成功！', '增加失败');
+    sendApi();
+  };
 
   return (
     <>
@@ -147,9 +161,20 @@ const ActivityDetail = () => {
         history.push('/activityCentre/activityLook');
       }}>
         <Card>
+          {/*<Row className="theme-margin-bottom">*/}
+          {/*  <Col span={8}>*/}
+          {/*    <Search placeholder="输入搜索内容" onSearch={onSearch} style={{ width: 200 }} allowClear/>*/}
+          {/*  </Col>*/}
+          {/*</Row>*/}
           <Row className="theme-margin-bottom">
-            <Col span={8}>
-              <Search placeholder="输入搜索内容" onSearch={onSearch} style={{ width: 200 }} allowClear/>
+            <Col span={5}>
+              <CommonSearch sendApi={sendApi}/>
+            </Col>
+            <Col span={3}>
+              <UpLoadFile senApi={(file) => activityDetailUpload({ file, activity_id: query?.activity_id })}/>
+            </Col>
+            <Col span={5}>
+              <AddForm buttonString="添加一条" formData={AddForms} onFinish={onAddSubmit}/>
             </Col>
           </Row>
           <Table loading={loading} dataSource={dataSource || []} pagination={false} columns={columns}

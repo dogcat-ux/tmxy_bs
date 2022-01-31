@@ -14,9 +14,15 @@ export const TYPE_MAP = {
   '减分': 3,
   '额外减分': 3,
 };
+export const CHECK_TYPE2 = {
+  '审核中': 0,
+  '审核通过': 1,
+  '审核失败': 2,
+};
 export const TYPE_MAP2 = {
   1: '活动加分',
   2: '额外加分',
   3: '额外减分',
 };
-export const TYPE=["活动加分","额外加分","额外减分"]
+export const CHECK_TYPE = ["审核中","审核通过","审核失败"];
+export const TYPE = ['活动加分', '额外加分', '额外减分'];

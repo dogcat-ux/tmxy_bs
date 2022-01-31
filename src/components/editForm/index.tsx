@@ -21,7 +21,6 @@ const EditForm: React.FC<EditFormProps> = ({ formData, onFinish }) => {
   // const [datas, setDatas] = useState({ ...editData });
   const onFinishFailed = (errorInfo: any) => {
     console.log(errorInfo);
-    setEditFormVisible(false);
     // message.error('提交失败!');
     Modal.error({
       content: '提交失败' + errorInfo?.errorFields[0].errors,
@@ -33,7 +32,7 @@ const EditForm: React.FC<EditFormProps> = ({ formData, onFinish }) => {
   };
   return (
     <>
-      <Modal title="修改" footer={null} visible={editFormVisible} onCancel={handleCancel}>
+      <Modal title="修改" footer={null} visible={editFormVisible} onCancel={handleCancel} destroyOnClose>
         <Form
           name="basic"
           labelCol={{ span: 8 }}
@@ -54,7 +53,7 @@ const EditForm: React.FC<EditFormProps> = ({ formData, onFinish }) => {
                 label={value.label}
                 rules={value.rules}
                 // initialValue={editData?editData[value.name]:''}
-                // initialValue={value?.initialValue}
+                initialValue={value?.initialValue}
               >
                 {value.children}
               </Form.Item>;

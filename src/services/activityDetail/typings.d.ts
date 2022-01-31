@@ -11,6 +11,12 @@ declare namespace API {
     msg?: string
     error?: string
   }
+  type CommonRes = {
+    data?: string
+    status?: number,
+    msg?: string
+    error?: string
+  }
 
   type ActivityDetailListRes = {
     activity_detail_id?: number

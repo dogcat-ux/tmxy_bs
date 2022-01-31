@@ -40,6 +40,8 @@ declare namespace API {
     page_size?: number
     activity_end_time?: string
     category_name?: string
+    status?: number
+    // 0 返回审核中和审核失败  1返回审核通过
   };
   type AmendActivityRes = {
     data?: string,
@@ -62,5 +64,7 @@ declare namespace API {
     responsible_people?: string
     responsible_people_phone?: string
     status?: number
+    activity_start_time?: number,
+    activity_end_time?: number
   };
 }

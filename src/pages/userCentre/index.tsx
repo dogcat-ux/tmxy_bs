@@ -1,15 +1,15 @@
 // @ts-ignore
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import CommonTable from '@/components/CommonTable';
 import { dateChange } from '@/utils/dateChange';
 import { firstPage, firstPageSize } from '@/types';
-import { Card, Popconfirm, Space, Typography } from 'antd';
+import { Card, Typography, Input } from 'antd';
 import { useModel } from '@@/plugin-model/useModel';
-import { extraAddDetailDelete } from '@/services/extraAdd';
 import feedBack from '@/utils/apiFeedback';
 import CommonRow from '@/components/commonRow';
 import { useHistory } from 'umi';
+import { personCenterDelete, personCenterPut } from '@/services/userCentre';
 
 const { Text } = Typography;
 
@@ -18,6 +18,7 @@ const UserCenter = () => {
   // @ts-ignore
   const { dataSource, loading, getExtraAddList, timeInfo } = useModel('userCentre');
   const { current, pageSize } = useModel('commonTable');
+  const [item, setItem] = useState<any>();
   const sendApi = async (body?: any) => {
     const parms = {
       page_num: current || firstPage,
@@ -47,44 +48,48 @@ const UserCenter = () => {
       dataIndex: 'all_score',
       key: 'all_score',
       render: (text: any, accord: API.personCenterResItem) =>
-        <> <Text underline><a href="#" onClick={()=>{// @ts-ignore
+        <> <Text underline><a href="#" onClick={() => {// @ts-ignore
           history.push({
-          pathname:'/userCentre/allScore',
-          query:{...accord}
-        })}}>{text}</a></Text></>,
+            pathname: '/userCentre/allScore',
+            query: { ...accord },
+          });
+        }}>{text}</a></Text></>,
     },
     {
       title: '活动加分',
       dataIndex: 'activity_score',
       key: 'activity_score',
       render: (text: any, accord: API.personCenterResItem) =>
-        <> <Text underline><a href="#" onClick={()=>{// @ts-ignore
+        <> <Text underline><a href="#" onClick={() => {// @ts-ignore
           history.push({
-            pathname:'/userCentre/activityScore',
-            query:{...accord}
-          })}}>{text}</a></Text></>,
-  },
+            pathname: '/userCentre/activityScore',
+            query: { ...accord },
+          });
+        }}>{text}</a></Text></>,
+    },
     {
       title: '额外加分',
       dataIndex: 'extra_add_score',
       key: 'extra_add_score',
       render: (text: any, accord: API.personCenterResItem) =>
-        <> <Text underline><a href="#" onClick={()=>{// @ts-ignore
+        <> <Text underline><a href="#" onClick={() => {// @ts-ignore
           history.push({
-            pathname:'/userCentre/extraAddScore',
-            query:{...accord}
-          })}}>{text}</a></Text></>,
+            pathname: '/userCentre/extraAddScore',
+            query: { ...accord },
+          });
+        }}>{text}</a></Text></>,
     },
     {
       title: '额外减分',
       dataIndex: 'extra_deduction_score',
       key: 'extra_deduction_score',
       render: (text: any, accord: API.personCenterResItem) =>
-        <> <Text underline><a href="#" onClick={()=>{// @ts-ignore
+        <> <Text underline><a href="#" onClick={() => {// @ts-ignore
           history.push({
-            pathname:'/userCentre/extraDeduction',
-            query:{...accord}
-          })}}>{text}</a></Text></>,
+            pathname: '/userCentre/extraDeduction',
+            query: { ...accord },
+          });
+        }}>{text}</a></Text></>,
     },
     {
       title: '创建日期',
@@ -93,32 +98,39 @@ const UserCenter = () => {
         <>{dateChange(accord?.created_at)}</>
       ,
     },
+  ];
+  const forms = [
     {
-      title: '操作',
-      key: 'extra_add_id',
-      render: (record: any) => (
-        <Space size="middle">
-
-          <Popconfirm
-            title="确定删除吗?"
-            onConfirm={async () => {
-              const res = await extraAddDetailDelete(record?.extra_add_detail_id);
-              feedBack(res, '删除成功', '删除失败');
-              sendApi({
-                page_num: current || firstPage,
-                page_size: pageSize || firstPageSize,
-              });
-              // deleteApi={(record: any) => extraAddDetailDelete(record?.extra_add_detail_id)}
-            }}
-            okText="确实"
-            cancelText="取消"
-          >
-            <a>删除</a>
-          </Popconfirm>
-        </Space>
-      ),
+      label: '学号',
+      name: 'stu_number',
+      rules: [{ required: true }],
+      initialValue: item?.stu_number,
+      children: <Input disabled/>,
+    },
+    {
+      label: '姓名',
+      name: 'user_name',
+      rules: [{ required: true }],
+      initialValue: item?.user_name,
+      children: <Input/>,
+    },
+    {
+      label: '联系方式',
+      name: 'phone',
+      rules: [{ required: true },
+        {
+          pattern: /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/,
+          message: '请输入正确格式的手机号码',
+        }],
+      initialValue: item?.phone_number,
+      children: <Input/>,
     },
   ];
+  const onSubmit = async (data: any) => {
+    const res = await personCenterPut({ ...data });
+    feedBack(res, '修改成功', '修改失败');
+    sendApi();
+  };
   useEffect(() => {
     sendApi();
   }, []);
@@ -127,7 +139,13 @@ const UserCenter = () => {
       <Card>
         <CommonRow sendApi={sendApi}/>
         <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={sendApi}
-                     body={timeInfo ? { time_stamp: timeInfo } : null}/>
+                     body={timeInfo ? { time_stamp: timeInfo } : null}
+                     onAmend={(record) => {
+                       setItem(record);
+                     }}
+                     isAction={true} isLook={false} formData={forms} onFinish={onSubmit}
+                     deleteApi={(record: any) => personCenterDelete({ stu_number: record?.stu_number })}
+        />
       </Card>
     </PageContainer>
   )

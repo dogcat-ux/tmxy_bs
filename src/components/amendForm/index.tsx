@@ -24,31 +24,16 @@ const AmendForm: React.FC<FormProps> = ({
                                          items,
                                        }) => {
   const {
-    // activity_id,
     activity_name,
     category_name,
-    // activity_unit,
-    // publisher_,
-    // publisher_name,
-    // content,
-    // image,
     sign_up_start_time,
     sign_up_end_time,
-    // activity_place,
     activity_start_time,
     activity_end_time,
     recruitment,
-    // basic_score,
-    // code,
-    // sign_in_place,
-    // sign_in_range,
-    // responsible_people,
-    // responsible_people_phone,
-    // status,
   } = items;
   const { categorys, getCategorys } = useModel('common');
   const onFinish = (values: any) => {
-    // const v=_.deepClone(values)
     console.log("values",values);
     console.log({ ...values });
     handleSubmit({ ...values,
@@ -81,7 +66,7 @@ const AmendForm: React.FC<FormProps> = ({
         <Form.Item
           name="activity_name"
           label="活动名称"
-          rules={[{ required: true }]}
+          rules={[{ required: false }]}
           initialValue={activity_name}
         >
           {/*<Input placeholder={activity_name}/>*/}

@@ -9,7 +9,8 @@
 export default {
   dev: {
     // localhost:8000/api/** -> https://preview.pro.ant.design/api/**
-    '/api': {
+    // '/api': {
+    '/apl': {
       // 要代理的地址
       // target: 'http://1.12.252.83:3000/',
       target: 'http://139.9.196.99:4000/',
@@ -17,7 +18,7 @@ export default {
       // 配置了这个可以从 http 代理到 https
       // 依赖 origin 的功能可能需要这个，比如 cookie
       changeOrigin: true,
-      // pathRewrite: { '^/apl': '' },
+      pathRewrite: { '^/apl': '' },
     },
   },
   test: {

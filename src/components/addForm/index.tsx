@@ -35,7 +35,7 @@ const AddForm: React.FC<AddFormProps> = ({ formData, onFinish, buttonString }) =
       <Button type="primary" onClick={() => {
         setAddFormVisible(true);
       }}>{buttonString}</Button>
-      <Modal title="增加" footer={null} visible={addFormVisible} onCancel={handleCancel}>
+      <Modal title="增加" footer={null} visible={addFormVisible} onCancel={handleCancel} destroyOnClose>
         <Form
           name="basic"
           labelCol={{ span: 8 }}

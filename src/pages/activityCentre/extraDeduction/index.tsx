@@ -122,10 +122,7 @@ export default () => {
         <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={getExtraAddList}
                      body={timeInfo ? { time_stamp: timeInfo } : null}
                      isAction url={'/activityCentre/extraDeductionDetail'} formData={forms} onFinish={onEditSubmit}
-                     onAmend={(record) => {
-                       setItem(record);
-                       console.log('record', record);
-                     }}
+                     onAmend={(record) => {setItem(record);}}
                      deleteApi={(record: any) => extraDeductionDelete(record?.extra_deduction_id)}/>
       </Card>
     </PageContainer>

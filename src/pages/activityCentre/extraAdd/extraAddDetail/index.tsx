@@ -150,7 +150,7 @@ const ExtreAddDetail = () => {
       label: '分数',
       name: 'score',
       rules: [{ required: true }],
-      children: <Input/>,
+      children: <InputNumber/>,
     },
   ];
   const onAddSubmit = async (data: extraAddParam) => {

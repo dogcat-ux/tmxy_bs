@@ -149,6 +149,10 @@
         path: '/other/semester',
         component: './other/semester',
       },
+      {
+        path: '/other/noticeDetail',
+        component: './other/notice/noticeDetail',
+      },
     ],
   },
   {

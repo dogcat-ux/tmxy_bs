@@ -19,12 +19,15 @@ interface CommonTableProps {
   onAmend?: (data: any) => void,
   //是否显示操作列 显示的话后面的参数必须传
   isAction?: boolean,
-  //修改按钮点击
+  //查看按钮点击
   url?: string,
   //表单数据
   formData?: formDataItem[],
   onFinish?: (data: any) => void,
-  deleteApi?: (data: any) => void
+  deleteApi?: (data: any) => void,
+  isLook?: boolean,
+  isAmend?: boolean,
+  isDelete?: boolean,
 }
 
 const CommonTable: React.FC<CommonTableProps> = ({
@@ -39,6 +42,9 @@ const CommonTable: React.FC<CommonTableProps> = ({
                                                    formData,
                                                    onFinish,
                                                    deleteApi,
+                                                   isLook = true,
+                                                   isAmend = true,
+                                                   isDelete = true,
                                                  }) => {
   const { pageSize, current, total, setCurrent, clear, setPageSize, setEditData, setEditFormVisible } = useModel('commonTable');
   const firstPage = useState(1)[0];
@@ -57,28 +63,27 @@ const CommonTable: React.FC<CommonTableProps> = ({
     ...columns,
     {
       title: '操作',
-      // key: 'extra_add_id',
+      key: 'action',
+      width: 150,
+      fixed: 'right',
       render: (record: any) => (
         <Space size="middle">
-          <a onClick={() => {
+          {isLook && <a onClick={() => {
             // @ts-ignore
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             url && history.push({
               pathname: url,
               query: { ...record },
             });
-          }}
-          >
-            查看
-          </a>
-          <a onClick={() => {
+          }}>查看</a>}
+          {isAmend && <a onClick={() => {
             setEditFormVisible(true);
             clear();
             setEditData(record);
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             onAmend && onAmend(record);
-          }}>修改</a>
-          <Popconfirm
+          }}>修改</a>}
+          {isDelete && <Popconfirm
             title="确定删除吗?"
             onConfirm={() => {
               deleteClick(record);
@@ -87,7 +92,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
             cancelText="取消"
           >
             <a>删除</a>
-          </Popconfirm>
+          </Popconfirm>}
         </Space>
       ),
     },
@@ -109,7 +114,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
   return (
     <div>
       <Table loading={loading} dataSource={dataSource || []} pagination={false} columns={isAction ? myColums : columns}
-             rowKey={record => Number(record.activity_id)}/>
+             rowKey={record => Number(record.activity_id || record.id)} scroll={{ x: 1200 }}/>
       <div className="my-common-pagination">
         <Pagination
           total={total}

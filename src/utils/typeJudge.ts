@@ -15,11 +15,11 @@ export const activeState = (accord: API.ActivityRes) => {
 };
 
 export const checkState = (accord: API.ActivityRes) => {
-  if (accord.status === 0) {
+  if (accord?.status === 0) {
     return "审核中";
-  } else if (accord.status === 1) {
+  } else if (accord?.status === 1) {
     return "审核通过";
-  } else if (accord.status === 2) {
+  } else if (accord?.status === 2) {
     return "审核失败";
   } else {
     return "审核中";

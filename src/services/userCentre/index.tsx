@@ -1,8 +1,9 @@
 /* eslint-disable */
-import request from '../index';
+import request  from '../index';
 import _ from 'lodash';
 import scoreDetailRes from '@/services/userCentre/data';
 import scoreDetailParam from '@/services/userCentre/data';
+// import request as rq from "umi"
 
 export async function personCenter(body: API.personCenterParam, options?: { [key: string]: any }) {
   let params = new FormData();
@@ -12,6 +13,36 @@ export async function personCenter(body: API.personCenterParam, options?: { [key
   });
   return request<API.personCenterRes>(`api/v2/person-center`, {
     method: 'POST',
+    data: params,
+    ...(options || {}),
+  });
+}
+
+export async function personCenterPut(body: {
+  stu_number: string,
+  user_name: string,
+  phone: string
+}, options?: { [key: string]: any }) {
+  let params = new FormData();
+  _.forIn(body, function(value, key) {
+    // @ts-ignore
+    return params.append(key, value);
+  });
+  return request<API.commonRes>(`api/v2/person-center`, {
+    method: 'PUT',
+    data: params,
+    ...(options || {}),
+  });
+}
+
+export async function personCenterDelete(body: { stu_number: number }, options?: { [key: string]: any }) {
+  let params = new FormData();
+  _.forIn(body, function(value, key) {
+    // @ts-ignore
+    return params.append(key, value);
+  });
+  return request<API.personCenterRes>(`api/v2/person-center`, {
+    method: 'DELETE',
     data: params,
     ...(options || {}),
   });
@@ -133,9 +164,7 @@ export async function createAllScore(body: API.CreateAllScoreParam, options?: { 
   });
 }
 
-export async function activityByCategory(body: {
-  category: string
-}, options?: { [key: string]: any }) {
+export async function activityByCategory(body: { category: string }, options?: { [key: string]: any }) {
   let params = new FormData();
   _.forIn(body, function(value, key) {
     // @ts-ignore
@@ -148,6 +177,7 @@ export async function activityByCategory(body: {
     ...(options || {}),
   });
 }
+
 
 
 

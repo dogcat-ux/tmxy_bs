@@ -39,7 +39,6 @@ export default () => {
         };
         return temp;
       });
-      console.log('arrarr', arr);
       setYearMap(arr);
     } catch (e) {
       console.log(e);
@@ -61,6 +60,7 @@ export default () => {
           }
           return temp;
         });
+        console.log('arrarr', arr);
         setSemesteMap(arr);
       }
     } catch (e) {
