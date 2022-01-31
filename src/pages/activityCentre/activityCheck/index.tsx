@@ -1,7 +1,6 @@
 // @ts-ignore
 import React, { useEffect, useState } from 'react';
 import { Card, Col, Input, InputNumber, Modal, Row, Select, Typography } from 'antd';
-
 import { PageContainer } from '@ant-design/pro-layout';
 import { dateChange, toTimeStamp } from '@/utils/dateChange';
 import { DatePicker } from 'antd';
@@ -15,20 +14,8 @@ import feedBack from '@/utils/apiFeedback';
 import moment from 'moment';
 
 const { Paragraph } = Typography;
-
 const { Option } = Select;
 const { RangePicker } = DatePicker;
-export type TableListItem = {
-  activity_name?: string
-  category_name?: string
-  publisher_number?: string
-  publisher_name?: string
-  sign_up_start_time?: number
-  sign_up_end_time?: number
-  activity_start_time?: number
-  activity_end_time?: number
-  status?: number
-};
 const ActivityCheck = () => {
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
@@ -157,41 +144,7 @@ const ActivityCheck = () => {
       width: 200,
       render: (accord: API.ActivityRes) => <>{dateChange(accord?.activity_start_time)}~<br/>{dateChange(accord?.activity_end_time)}</>,
     },
-    // {
-    //   title: '操作',
-    //   key: 'action',
-    //   render: (record: API.ActivityRes) => (
-    //     <Space size="middle">
-    //       <a
-    //         onClick={() => {
-    //           // setEditFormVisible(true);
-    //           // setEditAccount(record);
-    //         }}
-    //       >
-    //         修改
-    //       </a>
-    //       <Popconfirm
-    //         title="Are you sure to delete this user?"
-    //         onConfirm={() => {
-    //           // deleteClick(record);
-    //         }}
-    //         okText="Yes"
-    //         cancelText="No"
-    //       >
-    //         <a>删除</a>
-    //       </Popconfirm>
-    //     </Space>
-    //   ),
-    // },
   ];
-  // const handleChange = async (page?: number, ps?: number) => {
-  //   setCurrent(page || firstPage);
-  //   setPageSize(ps || firstPageSize);
-  //   await sendApi({
-  //     page_num: page || firstPage,
-  //     page_size: ps || firstPageSize,
-  //   });
-  // };
   const forms = [
     {
       label: '活动名称',
@@ -344,8 +297,6 @@ const ActivityCheck = () => {
   const datesOk = async (val: any) => {
     const v = _.cloneDeep(val);
     if (v[0] && v[1]) {
-      // v[0].subtract(8, 'hours').set({ second: 0 });
-      // v[1].subtract(8, 'hours').set({ second: 0 });
       setActivityTimeInfo({
         startTime: v[0]?.unix(),
         endTime: v[1]?.unix(),
@@ -397,13 +348,7 @@ const ActivityCheck = () => {
                 }
               </Select>
             </Col>
-            {/*<Col span={6}>*/}
-            {/*  <Button onClick={onClear}>清除</Button>*/}
-            {/*</Col>*/}
           </Row>
-          {/*<Table loading={loading} dataSource={dataSource?.filter(value => value.status !== 1) || []} pagination={false}*/}
-          {/*       columns={columns}*/}
-          {/*       rowKey={record => Number(record.activity_id)}/>*/}
           <CommonTable columns={columns} dataSource={dataSource}
                        loading={loading} sendApi={sendApi}
                        isAction={true}
@@ -411,18 +356,6 @@ const ActivityCheck = () => {
                        onFinish={amendSubmit}
                        isLook={false}
                        deleteApi={(record: any) => deleteActivity(record?.activity_id)}/>
-          {/*<div className="my-common-pagination">*/}
-          {/*  <Pagination*/}
-          {/*    total={total}*/}
-          {/*    onChange={handleChange}*/}
-          {/*    current={current}*/}
-          {/*    pageSizeOptions={['10', '20', '30']}*/}
-          {/*    defaultPageSize={pageSize}*/}
-          {/*    showSizeChanger*/}
-          {/*    showQuickJumper*/}
-          {/*    showTotal={(t: number) => `Total ${t} items`}*/}
-          {/*  />*/}
-          {/*</div>*/}
         </Card>
       </PageContainer>
     </>

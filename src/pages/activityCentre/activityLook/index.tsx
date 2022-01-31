@@ -12,27 +12,12 @@ import feedBack from '@/utils/apiFeedback';
 import { useModel } from '@@/plugin-model/useModel';
 import CommonTable from '@/components/CommonTable';
 import moment from 'moment';
-// import { history } from 'umi';
 
 const { Option } = Select;
 const { RangePicker } = DatePicker;
 const { Paragraph } = Typography;
 
-export type TableListItem = {
-  activity_name?: string
-  category_name?: string
-  publisher_number?: string
-  publisher_name?: string
-  sign_up_start_time?: number
-  sign_up_end_time?: number
-  activity_start_time?: number
-  activity_end_time?: number
-  status?: number
-};
 const ActivityLook = () => {
-  // const history = useHistory();
-  // const [editFormVisible, setEditFormVisible] = useState<boolean>(false);
-  // const [editAccount, setEditAccount] = useState<API.ActivityRes>({});
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
   const { current, pageSize, editData } = useModel('commonTable');
@@ -132,92 +117,7 @@ const ActivityLook = () => {
       width: 200,
       render: (accord: API.ActivityRes) => <>{dateChange(accord?.activity_start_time)}~<br/>{dateChange(accord?.activity_end_time)}</>,
     },
-    // {
-    //   title: '操作',
-    //   key: 'action',
-    //   width: 200,
-    //   fixed: 'right',
-    //   render: (record: API.ActivityRes) => (
-    //     <Space size="middle">
-    //       <a onClick={() => {
-    //         // @ts-ignore
-    //         history.push({
-    //           pathname: '/activityCentre/activityDetail', query: {
-    //             ...record,
-    //           },
-    //         });
-    //       }}>查看</a>
-    //       <a
-    //         onClick={() => {
-    //           setEditFormVisible(true);
-    //           setEditAccount(record);
-    //         }}
-    //       >
-    //         修改
-    //       </a>
-    //       <Popconfirm
-    //         title='确定删除吗'
-    //         onConfirm={async () => {
-    //           feedBack(await deleteActivity(record?.activity_id), '删除成功', '删除失败');
-    //           // eslint-disable-next-line @typescript-eslint/no-use-before-define
-    //           await sendApi();
-    //         }}
-    //         okText='Yes'
-    //         cancelText='No'
-    //       >
-    //         <a>删除</a>
-    //       </Popconfirm>
-    //     </Space>
-    //   ),
-    // },
   ];
-  // const handleEditCancel = () => {
-  //   setEditFormVisible(false);
-  // };
-  // const handleEditSubmit = async (value: any) => {
-  //   console.log('valuevaluevaluevalue', value);
-  //   await amendActivity(value?.activity_id, {
-  //     ...value,
-  //     // activity_unit? : string
-  //     // publisher_number? : string
-  //     // publisher_name? : string
-  //     // content? : string
-  //     // image? : string
-  //     // sign_up_start_time? : number
-  //     // sign_up_end_time? : number
-  //     // activity_place? : string
-  //     // activity_start_time? : toTimeStamp(value?.activityTime[0]),
-  //     // activity_end_time? : toTimeStamp(value?.activityTime[1]),
-  //     // basic_score? : number
-  //     // code? : string
-  //     // sign_in_place? : string
-  //     // sign_in_range? : number
-  //     // responsible_people? : string
-  //     // responsible_people_phone? : string
-  //     // status? : number,
-  //   });
-  //   // const data =
-  //   //   userLevel === '3'
-  //   //     ? { ...value, id: editAccount?.id }
-  //   //     : {
-  //   //       password: value.password,
-  //   //       id: editAccount?.id,
-  //   //     };
-  //   // const res = await updateUser(data);
-  //   // if (res.code === 0) {
-  //   //   message.success(res.msg || 'Success to edit！');
-  //   //   setEditFormVisible(false);
-  //   //   getList({
-  //   //     page: current || 1,
-  //   //     limit: pageSize || 10,
-  //   //     startTime: timeInfo?.startTime,
-  //   //     endTime: timeInfo?.endTime,
-  //   //   });
-  //   // } else {
-  //   //   message.error(res.msg || 'Fail to edit！');
-  //   // }
-  // };
-
   const sendApi = async (body?: any) => {
     const parms = {
       page_num: current || firstPage,
@@ -238,8 +138,6 @@ const ActivityLook = () => {
   const datesOk = async (val: any) => {
     const v = _.cloneDeep(val);
     if (v[0] && v[1]) {
-      // v[0].subtract(8, ' hours').set({ second: 0 });
-      // v[1].subtract(8, ' hours').set({ second: 0 });
       setActivityTimeInfo({
         startTime: v[0]?.unix(),
         endTime: v[1]?.unix(),
@@ -270,7 +168,6 @@ const ActivityLook = () => {
       children: (
         <Input/>
       ),
-      // children: <CommonSelect defaultValue="" items={categorys?.map(value=>value.category_name)||[]} sendApi={(data) => {console.log(data);}}/>,
     },
     {
       label: '活动类型',
@@ -288,7 +185,6 @@ const ActivityLook = () => {
           }
         </Select>
       ),
-      // children: <CommonSelect defaultValue="" items={categorys?.map(value=>value.category_name)||[]} sendApi={(data) => {console.log(data);}}/>,
     },
     {
       label: '主办方',
@@ -415,36 +311,6 @@ const ActivityLook = () => {
               </Select>
             </Col>
           </Row>
-          {/*<Table onRow={(record) => {*/}
-          {/*  return {*/}
-          {/*    // onClick: () => {*/}
-          {/*    //   // @ts-ignore*/}
-          {/*    //   history.push({*/}
-          {/*    //     pathname: '/activityCentre/activityDetail', query: {*/}
-          {/*    //       ...record,*/}
-          {/*    //     },*/}
-          {/*    //   });*/}
-          {/*    // },*/}
-          {/*  };*/}
-          {/*}}*/}
-          {/*       loading={loading} dataSource={dataSource || []} pagination={false} columns={columns}*/}
-          {/*       rowKey={record => Number(record.activity_id)}/>*/}
-          {/*<div className="my-common-pagination">*/}
-          {/*  <Pagination*/}
-          {/*    total={total}*/}
-          {/*    onChange={handleChange}*/}
-          {/*    current={current}*/}
-          {/*    pageSizeOptions={['10', '20', '30']}*/}
-          {/*    defaultPageSize={pageSize}*/}
-          {/*    showSizeChanger*/}
-          {/*    showQuickJumper*/}
-          {/*    showTotal={(t: number) => `Total ${t} items`}*/}
-          {/*  />*/}
-          {/*</div>*/}
-          {/*<CommonTable columns={columns} dataSource={dataSource}*/}
-          {/*             loading={loading} sendApi={sendApi}*/}
-          {/*             isAction={false}*/}
-          {/*/>*/}
           <CommonTable columns={columns} dataSource={dataSource}
                        loading={loading} sendApi={sendApi}
                        isAction={true}
@@ -452,12 +318,6 @@ const ActivityLook = () => {
                        formData={forms}
                        onFinish={amendSubmit}
                        deleteApi={(record: any) => deleteActivity(record?.activity_id)}/>
-          {/*<AmendForm*/}
-          {/*  handleCancel={handleEditCancel}*/}
-          {/*  visible={editFormVisible}*/}
-          {/*  items={editAccount}*/}
-          {/*  handleSubmit={handleEditSubmit}*/}
-          {/*/>*/}
         </Card>
       </PageContainer>
     </>

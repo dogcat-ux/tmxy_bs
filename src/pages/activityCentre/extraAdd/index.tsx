@@ -47,13 +47,6 @@ export default () => {
       rules: [{ required: true }],
       initialValue: item?.add_score_category,
       children: <Input/>,
-      // children: (<Select>
-      //   {
-      //     extraCategorys?.map((value: API.TypeResItem, index: number) => <Option key={index}>
-      //       {value.category}
-      //     </Option>)
-      //   }
-      // </Select>),
     },
     {
       label: '类型说明',
@@ -62,14 +55,6 @@ export default () => {
       initialValue: item?.add_score_content,
       children: <Input/>,
     },
-    // {
-    //   label: '创建时间',
-    //   name: 'created_at',
-    //   rules: [{ required: true }],
-    //   initialValue: timeStampToMoement(editData?.created_at),
-    //   // children: <><DatePicker showTime/></>,
-    //   children: <DatePicker showTime/>,
-    // },
   ];
   const AddForms = [
     {
@@ -131,7 +116,6 @@ export default () => {
           </Col>
           <Col span={8}>
             <AddForm formData={AddForms} onFinish={onAddSubmit} buttonString="新建加分类型"/>
-            {/*<Button type="primary">增加类型</Button>*/}
           </Col>
         </Row>
         <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={getExtraAddList}
