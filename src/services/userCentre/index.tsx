@@ -98,7 +98,7 @@ export async function semesterList(
   options?: { [key: string]: any },
 ) {
   // @ts-ignore
-  return request<API.SemesterListRes>('/api/v2/person-center-semester', {
+  return request<API.SemesterListRes>('api/v2/person-center-semester', {
     method: 'GET',
     params: { ...body },
     ...(options || {}),
@@ -107,7 +107,7 @@ export async function semesterList(
 
 export async function yearList(options?: { [key: string]: any }) {
   // @ts-ignore
-  return request<API.YearListRes>('/api/v2/person-center-year', {
+  return request<API.YearListRes>('api/v2/person-center-year', {
     method: 'GET',
     ...(options || {}),
   });
@@ -115,7 +115,7 @@ export async function yearList(options?: { [key: string]: any }) {
 
 export async function gradeList(options?: { [key: string]: any }) {
   // @ts-ignore
-  return request<API.GradeListRes>('/api/v2/person-detail-grade', {
+  return request<API.GradeListRes>('api/v2/person-detail-grade', {
     method: 'GET',
     ...(options || {}),
   });
@@ -144,7 +144,7 @@ export async function extraType(body: { type: number }, options?: { [key: string
     return params.append(key, value);
   });
   // @ts-ignore
-  return request<API.TypeRes>('/api/v2/person-center-extra', {
+  return request<API.TypeRes>('api/v2/person-center-extra', {
     method: 'POST',
     data: params,
     ...(options || {}),
@@ -158,7 +158,7 @@ export async function createAllScore(body: API.CreateAllScoreParam, options?: { 
     return params.append(key, value);
   });
   // @ts-ignore
-  return request('/api/v2/create-all-score', {
+  return request('api/v2/create-all-score', {
     method: 'POST',
     data: params,
     ...(options || {}),
@@ -172,7 +172,7 @@ export async function activityByCategory(body: { category: string }, options?: {
     return params.append(key, value);
   });
   // @ts-ignore
-  return request<API.activityByCategoryRes>('/api/v2/activity-category', {
+  return request<API.activityByCategoryRes>('api/v2/activity-category', {
     method: 'POST',
     data: params,
     ...(options || {}),
@@ -186,7 +186,7 @@ export async function exportActivityDetail(body: API.exportActivityDetailParam, 
     return params.append(key, value);
   });
   // @ts-ignore
-  return request<API.commonRes>('/api/v2/export-activity-detail', {
+  return request<API.commonRes>('api/v2/export-activity-detail', {
     method: 'POST',
     data: params,
     ...(options || {}),

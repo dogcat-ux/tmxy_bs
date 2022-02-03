@@ -43,8 +43,7 @@ const TheNotice = () => {
       title: '创建日期',
       key: 'created_at',
       width: 200,
-      render: (text: any, accord: API.allScoreDetailResItem) =>
-        <>{dateChange(accord?.add_date)}</>
+      render: (text: any, accord: API.noticeResItem) => <>{dateChange(accord?.created_at)}</>
       ,
     },
     {

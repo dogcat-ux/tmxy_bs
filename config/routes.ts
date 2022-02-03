@@ -20,7 +20,11 @@
   },
   {
     path: '/',
-    redirect: '/upload/scoreUpload',
+    redirect: '/activityCentre/activityLook',
+  },
+  {
+    path: '/activityCentre',
+    redirect: '/activityCentre/activityLook',
   },
   {
     path: '/activityCentre',
@@ -124,6 +128,10 @@
         component: './upload/patriarchUpload',
       },
     ],
+  },
+  {
+    path: '/other',
+    redirect: '/other/carousel',
   },
   {
     path: '/other',

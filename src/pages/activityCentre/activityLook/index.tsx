@@ -75,6 +75,12 @@ const ActivityLook = () => {
       width: 100,
     },
     {
+      title: '签到码',
+      dataIndex: 'code',
+      key: 'code',
+      width: 100,
+    },
+    {
       title: '签到地点',
       dataIndex: 'sign_in_place',
       key: 'sign_in_place',
