@@ -89,7 +89,9 @@ const ExtreDeductionDetail = () => {
                                 onClick={() => {
                                   setIsAmended(!isAmended);
                                   extraDetailAmend(record?.extra_deduction_detail_id, { score });
-                                  sendApi();
+                                  setTimeout(() => {
+                                    sendApi();
+                                  }, 1000);
                                 }}
             /></>
         ) :
