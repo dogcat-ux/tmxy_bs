@@ -48,7 +48,6 @@ const Login: React.FC = () => {
   return (
     <div className={styles.container}>
       <div className={styles.lang} data-lang="">
-        {/*{SelectLang && <SelectLang />}*/}
       </div>
       <div className={styles.content}>
         <LoginForm
