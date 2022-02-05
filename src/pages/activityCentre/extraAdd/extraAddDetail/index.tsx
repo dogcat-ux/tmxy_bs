@@ -171,7 +171,7 @@ const ExtreAddDetail = () => {
             <CommonSearch sendApi={sendApi}/>
           </Col>
           <Col span={3}>
-            <UpLoadFile senApi={(file) => extraAddDetailImport({ file, extra_add_id: query?.extra_add_id })}/>
+            <UpLoadFile senApi={(file) => extraAddDetailImport({ file, extra_add_id: query?.extra_add_id })} freshData={sendApi}/>
           </Col>
           <Col span={5}>
             <AddForm buttonString="添加一条" formData={AddForms} onFinish={onAddSubmit}/>

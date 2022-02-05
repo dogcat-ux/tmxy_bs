@@ -54,7 +54,7 @@ const ActivityDetail = () => {
     {
       title: '加分日期',
       key: 'add_date',
-      render: (accord: API.ActivityDetailListRes) => <>{dateChange(accord?.add_date)}</>,
+      render: (accord: API.ActivityDetailListRes) => <>{accord?.add_date===0?"-":dateChange(accord?.add_date)}</>,
     },
     {
       title: '参与情况',
@@ -171,7 +171,7 @@ const ActivityDetail = () => {
               <CommonSearch sendApi={sendApi}/>
             </Col>
             <Col span={3}>
-              <UpLoadFile senApi={(file) => activityDetailUpload({ file, activity_id: query?.activity_id })}/>
+              <UpLoadFile senApi={(file) => activityDetailUpload({ file, activity_id: query?.activity_id })} freshData={sendApi}/>
             </Col>
             <Col span={5}>
               <AddForm buttonString="添加一条" formData={AddForms} onFinish={onAddSubmit}/>

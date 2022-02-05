@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Pagination, Popconfirm, Space, Table } from 'antd';
 import EditForm, { formDataItem } from '@/components/editForm';
-import { useHistory } from 'umi';
-import { useModel } from '@@/plugin-model/useModel';
+import { useHistory, useModel } from 'umi';
 import feedBack from '@/utils/apiFeedback';
 
 interface CommonTableProps {

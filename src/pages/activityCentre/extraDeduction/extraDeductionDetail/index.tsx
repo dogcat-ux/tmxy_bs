@@ -178,8 +178,9 @@ const ExtreDeductionDetail = () => {
             <CommonSearch sendApi={sendApi}/>
           </Col>
           <Col span={3}>
-            <UpLoadFile senApi={(file) => extraDeductionDetailImport({ file, extra_deduction_id: query?.extra_deduction_id }
-            )}/>
+            <UpLoadFile senApi={(file) => extraDeductionDetailImport({ file, extra_deduction_id: query?.extra_deduction_id })}
+                        freshData={sendApi}
+            />
           </Col>
           <Col span={5}>
             <DeductionForm buttonString="添加一条" formData={DeductionForms} onFinish={onAddSubmit}/>

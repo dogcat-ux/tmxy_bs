@@ -4,7 +4,7 @@ import feedBack from '@/utils/apiFeedback';
 import React from 'react';
 
 
-const UpLoadFile: React.FC<{ senApi: (file: any) => void }> = ({ senApi }) => {
+const UpLoadFile: React.FC<{ senApi: (file: any) => void ,freshData?: () => void }> = ({ senApi,freshData }) => {
   const FileProps = {
     name: 'file',
     accept: '.csv, application/vnd.ms-excel, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
@@ -21,6 +21,7 @@ const UpLoadFile: React.FC<{ senApi: (file: any) => void }> = ({ senApi }) => {
         // const res = await senApi(info.file[0].originFileObj);
         const res = await senApi(info.file);
         feedBack(res, `${info.file.name} 文件上传成功.`, `${info.file.name} 文件上传失败.`);
+        freshData();
       }
     },
     onDrop(e: any) {

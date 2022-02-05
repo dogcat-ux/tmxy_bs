@@ -9,11 +9,13 @@ import { Typography } from 'antd';
 import feedBack from '@/utils/apiFeedback';
 import { useHistory } from 'umi';
 import AddForm from '@/components/addForm';
+import { useModel } from '@@/plugin-model/useModel';
 
 const { Paragraph } = Typography;
 const { TextArea } = Input;
 const TheNotice = () => {
   const history = useHistory();
+  const { setTotal } = useModel('commonTable');
   const [dataSource, setDataSource] = useState<API.noticeResItem[]>();
   const [loading, setLoading] = useState<boolean>(false);
   const sendApi = async () => {
@@ -21,6 +23,7 @@ const TheNotice = () => {
     const { data } = await getNotice();
     setLoading(false);
     setDataSource(data?.item);
+    setTotal(data?.total || 0);
   };
   const columns = [
     {

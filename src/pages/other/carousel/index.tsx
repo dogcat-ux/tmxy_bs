@@ -71,9 +71,9 @@ const TheCarousel = () => {
     return false;
   };
   const onUpload = async () => {
-    console.log(file);
     const res=await creatCarousels({ file });
     feedBack(res, '上传成功', '上传失败');
+    sendApi();
   };
   return (
     <PageContainer>

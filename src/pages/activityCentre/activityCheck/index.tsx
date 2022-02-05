@@ -267,14 +267,14 @@ const ActivityCheck = () => {
     {
       label: '报名时间',
       name: 'signTime',
-      initialValue: [moment(editData?.sign_up_start_time), moment(editData?.sign_up_end_time)],
+      initialValue: [moment(dateChange(editData?.sign_up_start_time)), moment(dateChange(editData?.sign_up_end_time))],
       rules: [{ required: true }],
       children: <RangePicker showTime={{ format: 'HH:mm' }} allowClear format="YYYY-MM-DD HH:mm"/>,
     },
     {
       label: '活动时间',
       name: 'activeTime',
-      initialValue: [moment(editData?.activity_start_time), moment(editData?.activity_end_time)],
+      initialValue: [moment(dateChange(editData?.activity_start_time)), moment(dateChange(editData?.activity_end_time))],
       rules: [{ required: true }],
       children: <RangePicker showTime={{ format: 'HH:mm' }} allowClear format="YYYY-MM-DD HH:mm"/>,
     },
