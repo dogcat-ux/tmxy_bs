@@ -62,9 +62,9 @@ const UserCenter = () => {
       render: (scoreNow: number, record: any, index: number) => <>{isAmended && ID === index ?
         (
           <>
-            <InputNumber style={{ width: 100 }} defaultValue={scoreNow} value={score} onChange={(value) => {
-              setScore(Number(value));
-            }}/>&nbsp;
+            <InputNumber style={{ width: 100 }} defaultValue={Number(scoreNow).toFixed(2)} value={score.toString()} onChange={(value) => {
+                           setScore(Number(value));
+                         }}/>&nbsp;
             <CloseCircleTwoTone style={{ fontSize: 20 }} onClick={() => {
               setIsAmended(!isAmended);
             }}/>&nbsp;
@@ -83,10 +83,10 @@ const UserCenter = () => {
             /></>
         ) :
         (<>
-          <span>{scoreNow}</span>
+          <span>{Number(scoreNow).toFixed(2)}</span>
           < EditTwoTone style={{ fontSize: 20 }} onClick={() => {
             setIsAmended(!isAmended);
-            setScore(scoreNow);
+            setScore(Number(Number(scoreNow).toFixed(2)));
             setID(index);
           }}/>
         </>)

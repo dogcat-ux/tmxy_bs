@@ -53,7 +53,7 @@ const UserCenter = () => {
             pathname: '/userCentre/allScore',
             query: { ...accord },
           });
-        }}>{text}</a></Text></>,
+        }}>{Number(text).toFixed(2)}</a></Text></>,
     },
     {
       title: '活动加分',
@@ -65,7 +65,7 @@ const UserCenter = () => {
             pathname: '/userCentre/activityScore',
             query: { ...accord },
           });
-        }}>{text}</a></Text></>,
+        }}>{Number(text).toFixed(2)}</a></Text></>,
     },
     {
       title: '额外加分',
@@ -77,7 +77,7 @@ const UserCenter = () => {
             pathname: '/userCentre/extraAddScore',
             query: { ...accord },
           });
-        }}>{text}</a></Text></>,
+        }}>{Number(text).toFixed(2)}</a></Text></>,
     },
     {
       title: '额外减分',
@@ -89,7 +89,7 @@ const UserCenter = () => {
             pathname: '/userCentre/extraDeduction',
             query: { ...accord },
           });
-        }}>{text}</a></Text></>,
+        }}>{Number(text).toFixed(2)}</a></Text></>,
     },
     {
       title: '创建日期',
@@ -131,19 +131,6 @@ const UserCenter = () => {
     feedBack(res, '修改成功', '修改失败');
     sendApi();
   };
-  // const exportClick = async () => {
-  //   // await exportActivityDetail({
-  //   //   grade: string
-  //   //   year_start_time_stamp?: number
-  //   //   year_end_time_stamp?: number
-  //   //   semester_start_time_stamp?: number
-  //   //   semester_end_time_stamp?: number
-  //   //   info?: string
-  //   //   page_size?: number
-  //   //   page_num?: number
-  //   //   total?: number// 1 表示导出所有 0 表示导出该页
-  //   // });
-  // };
 
   useEffect(() => {
     sendApi();

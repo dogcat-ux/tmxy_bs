@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-layout';
 import CommonTable from '@/components/CommonTable';
 import { dateChange } from '@/utils/dateChange';
-import { firstPage, firstPageSize } from '@/types';
+import { firstPage, firstPageSize, TYPE_MAP } from '@/types';
 import { Card, InputNumber, Popconfirm, Space, Select } from 'antd';
 import feedBack from '@/utils/apiFeedback';
 import CommonRow from '@/components/commonRow';
@@ -50,10 +50,44 @@ const ActivityScore = () => {
       dataIndex: 'score',
       key: 'score',
       // render: (text: any) => <>{text}分</>,
+      // render: (scoreNow: number, record: any, index: number) => <>{isAmended && ID === index ?
+      //   (
+      //     <>
+      //       <InputNumber style={{ width: 100 }} defaultValue={Number(scoreNow).toFixed(2)} value={score.toString()}
+      //                    onChange={(value) => {
+      //                      setScore(Number(value));
+      //                    }}/>&nbsp;
+      //       <CloseCircleTwoTone style={{ fontSize: 20 }} onClick={() => {
+      //         setIsAmended(!isAmended);
+      //       }}/>&nbsp;
+      //       <CheckCircleTwoTone style={{ fontSize: 20 }}
+      //                           onClick={() => {
+      //                             setIsAmended(!isAmended);
+      //                             extraDetailAmend({
+      //                               id: record?.id, type: 1, score,
+      //                               stu_number: query?.stu_number,
+      //                             });
+      //                             // sendApi();
+      //                             setTimeout(() => {
+      //                               sendApi();
+      //                             }, 1000);
+      //                           }}
+      //       /></>
+      //   ) :
+      //   (<>
+      //     <span>{scoreNow}</span>
+      //     < EditTwoTone style={{ fontSize: 20 }} onClick={() => {
+      //       setIsAmended(!isAmended);
+      //       setScore(scoreNow);
+      //       setID(index);
+      //     }}/>
+      //   </>)
+      // }
+      // </>,
       render: (scoreNow: number, record: any, index: number) => <>{isAmended && ID === index ?
         (
           <>
-            <InputNumber style={{ width: 100 }} defaultValue={scoreNow} value={score} onChange={(value) => {
+            <InputNumber style={{ width: 100 }} defaultValue={Number(scoreNow).toFixed(2)} value={score.toString()} onChange={(value) => {
               setScore(Number(value));
             }}/>&nbsp;
             <CloseCircleTwoTone style={{ fontSize: 20 }} onClick={() => {
@@ -63,7 +97,7 @@ const ActivityScore = () => {
                                 onClick={() => {
                                   setIsAmended(!isAmended);
                                   extraDetailAmend({
-                                    id: record?.id, type: 1, score,
+                                    id: record?.id, type: TYPE_MAP[record.score_source], score,
                                     stu_number: query?.stu_number,
                                   });
                                   // sendApi();
@@ -74,10 +108,10 @@ const ActivityScore = () => {
             /></>
         ) :
         (<>
-          <span>{scoreNow}</span>
+          <span>{Number(scoreNow).toFixed(2)}</span>
           < EditTwoTone style={{ fontSize: 20 }} onClick={() => {
             setIsAmended(!isAmended);
-            setScore(scoreNow);
+            setScore(Number(Number(scoreNow).toFixed(2)));
             setID(index);
           }}/>
         </>)
@@ -146,7 +180,7 @@ const ActivityScore = () => {
       children: (
         <Select style={{ width: 120 }} onChange={handleChange}>
           {
-            categorys?.map((value, index: number) => {
+            categorys?.map((value: API.categoryItem, index: number) => {
               // @ts-ignore
               return <Option value={value.id} key={index}>{value.category_name}</Option>;
             })
@@ -160,7 +194,7 @@ const ActivityScore = () => {
       name: 'score_result',
       rules: [{ required: true }],
       children: (
-        <Select  style={{ width: 120 }}>
+        <Select style={{ width: 120 }}>
           {
             activies?.map((value) => {
               // @ts-ignore

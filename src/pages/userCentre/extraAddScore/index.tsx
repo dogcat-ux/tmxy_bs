@@ -51,9 +51,10 @@ const ActivityScore = () => {
       render: (scoreNow: number, record: any, index: number) => <>{isAmended && ID === index ?
         (
           <>
-            <InputNumber style={{ width: 100 }} defaultValue={scoreNow} value={score} onChange={(value) => {
-              setScore(Number(value));
-            }}/>&nbsp;
+            <InputNumber style={{ width: 100 }} defaultValue={Number(scoreNow).toFixed(2)} value={score.toString()}
+                         onChange={(value) => {
+                           setScore(Number(value));
+                         }}/>&nbsp;
             <CloseCircleTwoTone style={{ fontSize: 20 }} onClick={() => {
               setIsAmended(!isAmended);
             }}/>&nbsp;
@@ -65,17 +66,17 @@ const ActivityScore = () => {
                                     stu_number: query?.stu_number,
                                   });
                                   // sendApi();
-                                  setTimeout(()=>{
+                                  setTimeout(() => {
                                     sendApi();
-                                  },1000)
+                                  }, 1000);
                                 }}
             /></>
         ) :
         (<>
-          <span>{scoreNow}</span>
+          <span>{Number(scoreNow).toFixed(2)}</span>
           < EditTwoTone style={{ fontSize: 20 }} onClick={() => {
             setIsAmended(!isAmended);
-            setScore(scoreNow);
+            setScore(Number(Number(scoreNow).toFixed(2)));
             setID(index);
           }}/>
         </>)
@@ -126,7 +127,7 @@ const ActivityScore = () => {
       children: (
         <Select defaultValue='' style={{ width: 120 }}>
           {
-            extraCategorys?.map((value, index: number) => {
+            extraCategorys?.map((value: API.TypeResItem, index: number) => {
               // @ts-ignore
               return <Option value={value.id} key={index}>{value.category}</Option>;
             })
