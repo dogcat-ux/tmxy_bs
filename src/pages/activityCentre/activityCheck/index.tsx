@@ -293,6 +293,7 @@ const ActivityCheck = () => {
     });
     feedBack(res, '修改成功', '修改失败');
     setEditFormVisible(false);
+    sendApi();
   };
 
   const selectChange = async (val: string) => {

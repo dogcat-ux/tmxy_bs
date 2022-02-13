@@ -291,6 +291,7 @@ const ActivityLook = () => {
     });
     feedBack(res, '修改成功', '修改失败');
     setEditFormVisible(false);
+    sendApi();
   };
   const onAmend = (record: any) => {
     setId(record?.activity_id)
