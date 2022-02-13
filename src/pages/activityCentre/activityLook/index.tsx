@@ -20,7 +20,8 @@ const { Paragraph } = Typography;
 const ActivityLook = () => {
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
-  const { current, pageSize, editData } = useModel('commonTable');
+  const [id,setId]=useState(-1);
+  const { current, pageSize, editData,setEditFormVisible } = useModel('commonTable');
   const { categorys, getCategorys, dataSource, loading, getList, category1, activityTimeInfo, setCategory1, setActivityTimeInfo } = useModel('common');
   const data1 = category1 ? { category_name: category1 } : {};
   const data2 = activityTimeInfo ? {
@@ -162,7 +163,8 @@ const ActivityLook = () => {
     }
   };
   useEffect(() => {
-    Promise.all([sendApi(), getCategorys()]);
+   sendApi();
+   getCategorys();
   }, []);
   const forms = [
     {
@@ -184,9 +186,9 @@ const ActivityLook = () => {
       children: (
         <Select style={{ width: 120 }}>
           {
-            categorys?.map((value, index: number) => {
+            categorys?.map((value) => {
               // @ts-ignore
-              return <Option value={value.id} key={index}>{value.category_name}</Option>;
+              return <Option value={value.id} key={value}>{value.category_name}</Option>;
             })
           }
         </Select>
@@ -280,7 +282,7 @@ const ActivityLook = () => {
     },
   ];
   const amendSubmit = async (data: any) => {
-    const res = await amendActivity(editData?.activity_id, {
+    const res = await amendActivity(editData?.activity_id||id, {
       ...data,
       sign_up_start_time: toTimeStamp(data?.signTime[0]),
       sign_up_end_time: toTimeStamp(data?.signTime[1]),
@@ -288,8 +290,11 @@ const ActivityLook = () => {
       activity_end_time: toTimeStamp(data?.activeTime[1]),
     });
     feedBack(res, '修改成功', '修改失败');
+    setEditFormVisible(false);
   };
-
+  const onAmend = (record: any) => {
+    setId(record?.activity_id)
+  };
   return (
     <>
       <PageContainer>
@@ -322,6 +327,7 @@ const ActivityLook = () => {
                        isAction={true}
                        url='/activityCentre/activityDetail'
                        formData={forms}
+                       onAmend={onAmend}
                        onFinish={amendSubmit}
                        deleteApi={(record: any) => deleteActivity(record?.activity_id)}/>
         </Card>

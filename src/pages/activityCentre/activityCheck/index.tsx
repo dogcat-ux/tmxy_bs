@@ -18,9 +18,10 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const ActivityCheck = () => {
   const firstPage = useState(1)[0];
+  const [id,setId]=useState(-1);
   const firstPageSize = useState(10)[0];
   const { categorys, getCategorys, dataSource, loading, getList, category1, activityTimeInfo, setCategory1, setActivityTimeInfo } = useModel('common');
-  const { current, pageSize, editData } = useModel('commonTable');
+  const { current, pageSize, editData,setEditFormVisible } = useModel('commonTable');
   const data1 = category1 ? { category_name: category1 } : {};
   const data2 = activityTimeInfo ? {
     activity_start_time: activityTimeInfo.startTime,
@@ -44,6 +45,9 @@ const ActivityCheck = () => {
       feedBack(res, '审核状态修改成功', '审核状态修改失败');
       await sendApi();
     }
+  };
+  const onAmend = (record: any) => {
+    setId(record?.activity_id)
   };
   const columns = [
     {
@@ -172,9 +176,9 @@ const ActivityCheck = () => {
       children: (
         <Select style={{ width: 120 }}>
           {
-            categorys?.map((value, index: number) => {
+            categorys?.map((value) => {
               // @ts-ignore
-              return <Option value={value.id} key={index}>{value.category_name}</Option>;
+              return <Option value={value.id} key={value.id}>{value.category_name}</Option>;
             })
           }
         </Select>
@@ -280,7 +284,7 @@ const ActivityCheck = () => {
     },
   ];
   const amendSubmit = async (data: any) => {
-    const res = await amendActivity(editData?.activity_id, {
+    const res = await amendActivity(editData?.activity_id||id, {
       ...data,
       sign_up_start_time: toTimeStamp(data?.signTime[0]),
       sign_up_end_time: toTimeStamp(data?.signTime[1]),
@@ -288,6 +292,7 @@ const ActivityCheck = () => {
       activity_end_time: toTimeStamp(data?.activeTime[1]),
     });
     feedBack(res, '修改成功', '修改失败');
+    setEditFormVisible(false);
   };
 
   const selectChange = async (val: string) => {
@@ -359,6 +364,7 @@ const ActivityCheck = () => {
                        loading={loading} sendApi={sendApi}
                        isAction={true}
                        formData={forms}
+                       onAmend={onAmend}
                        onFinish={amendSubmit}
                        isLook={false}
                        deleteApi={(record: any) => deleteActivity(record?.activity_id)}/>

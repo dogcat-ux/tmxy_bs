@@ -45,7 +45,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
                                                    isAmend = true,
                                                    isDelete = true,
                                                  }) => {
-  const { pageSize, current, total, setCurrent, clear, setPageSize, setEditData, setEditFormVisible } = useModel('commonTable');
+  const { pageSize, current, total, setCurrent, setPageSize, setEditData, setEditFormVisible } = useModel('commonTable');
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
   const history = useHistory();
@@ -77,7 +77,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
           }}>查看</a>}
           {isAmend && <a onClick={() => {
             setEditFormVisible(true);
-            clear();
+            // clear();
             setEditData(record);
             // eslint-disable-next-line @typescript-eslint/no-unused-expressions
             onAmend && onAmend(record);
