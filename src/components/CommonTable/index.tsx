@@ -113,7 +113,7 @@ const CommonTable: React.FC<CommonTableProps> = ({
   return (
     <div>
       <Table loading={loading} dataSource={dataSource || []} pagination={false} columns={isAction ? myColums : columns}
-             rowKey={record => record?.activity_id || record?.id || record?.extra_add_id||record?.extra_deduction_id||record?.stu_number} scroll={{ x: 1200 }}/>
+             rowKey={record => record?.activity_id || record?.id || record?.extra_add_id||record?.extra_deduction_id||record?.stu_number||record?.activity_semester_id} scroll={{ x: 1200 }}/>
       <div className="my-common-pagination">
         <Pagination
           total={total}

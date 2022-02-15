@@ -18,15 +18,6 @@ export default () => {
     const { data: { item } } = await extraType({ type });
     setExtraCategorys(item);
   }, []);
-  // const getList = useCallback(async (body?: API.ActivityParam) => {
-  //   try {
-  //     const res = await activityList({ ...body });
-  //   } catch (e) {
-  //     console.log(e);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }, []);
   return {
     getExtraCategorys, getCategorys, categorys,
     extraCategorys, setExtraCategorys,category1,setCategory1,extraCategory,setExtraCategory

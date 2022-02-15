@@ -1,6 +1,4 @@
 import { useCallback, useEffect, useState } from 'react';
-import { extraAddList } from '@/services/extraAdd';
-import { extraAddListParam, extraAddListResItem } from '@/services/extraAdd/data';
 import { firstPage, firstPageSize } from '@/types';
 import { useModel } from '@@/plugin-model/useModel';
 import { extraDeductionList } from '@/services/extraDeduction';

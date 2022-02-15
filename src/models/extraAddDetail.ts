@@ -29,21 +29,10 @@ const ExtreAddDetail = () => {
     try {
       const res = await extraAddDetailAmend(id, { ...body });
       feedBack(res, '修改成功', '修改失败');
-      // const parms = {
-      //   page_num: current || firstPage,
-      //   page_size: pageSize || firstPageSize,
-      // };
-      // getExtraAddList({ ...parms });
     } catch (e) {
       console.log(e);
     }
   }, []);
-  // useEffect(() => {
-  //   getExtraAddList({
-  //     page_num: current || firstPage,
-  //     page_size: pageSize || firstPageSize,
-  //   });
-  // }, []);
   return {
     setTimeInfo, timeInfo,
     dataSource, setDataSource, getExtraAddList,

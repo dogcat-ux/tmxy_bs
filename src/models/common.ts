@@ -10,13 +10,9 @@ export interface TimeInfo {
 
 export default () => {
   const { setTotal } = useModel('commonTable');
-  // const [current, setCurrent] = useState(1);
-  // const [total, setTotal] = useState(0);
-  // const [pageSize, setPageSize] = useState(10);
   const [category1, setCategory1] = useState<string>('');
   const [activityTimeInfo, setActivityTimeInfo] = useState<TimeInfo>();
   const [enterTimeInfo, setEnterTimeInfo] = useState<TimeInfo>();
-  // const [categoryName, setCategoryName] = useState('');
   const [search, setSearch] = useState('');
   const [categorys, setCategorys] = useState<API.categoryItem[]>();
   const [loading, setLoading] = useState<boolean>(false);
@@ -42,17 +38,10 @@ export default () => {
   }, []);
 
   return {
-    // sendApi,sendNoDate,sendNoCate,
     categorys, getCategorys,
     category1, setCategory1,
-    // total,
-    // current,
-    // setTotal,
     dataSource, setDataSource, getList,
     loading, search, setSearch,
-    // categoryName, setCategoryName,
-    // setCurrent,
-    // setPageSize,
     activityTimeInfo, setActivityTimeInfo,
     enterTimeInfo, setEnterTimeInfo,
   };

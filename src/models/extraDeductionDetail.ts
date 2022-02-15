@@ -5,8 +5,10 @@ import { extraDeductionDetailListItem, extraDeductionDetailListParam } from '@/s
 import { extraDeductionDetailAmend, extraDeductionDetailList } from '@/services/extraDeduction';
 
 
+// @ts-ignore
 const ExtreAddDetail = () => {
   const [timeInfo, setTimeInfo] = useState<number>();
+  // @ts-ignore
   const { setTotal, pageSize, current } = useModel('commonTable');
   const [loading, setLoading] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<extraDeductionDetailListItem[]>([]);
