@@ -3,8 +3,8 @@ import { extend } from 'umi-request';
 import { history } from 'umi';
 
 const request = extend({
-  // prefix: process.env.NODE_ENV === 'development' ? '/apl/' : 'http://1.12.252.83:3000/',
-  prefix: process.env.NODE_ENV === 'development' ? '/apl' : 'http://139.9.196.99:4000/',
+  prefix: process.env.NODE_ENV === 'development' ? '/apl/' : 'http://1.12.252.83:4000/',
+  // prefix: process.env.NODE_ENV === 'development' ? '/apl' : 'http://139.9.196.99:4000/',
 });
 
 request.interceptors.response.use((res) => {
