@@ -13,16 +13,12 @@ const ExtreAddDetail = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<extraDeductionDetailListItem[]>([]);
   const getExtraDeductionList = useCallback(async (body?: extraDeductionDetailListParam) => {
-    try {
-      setLoading(true);
-      const res = await extraDeductionDetailList({ ...body });
-      setDataSource(res?.data?.item || []);
-      setTotal(res?.data?.total || 0);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const res = await extraDeductionDetailList({ ...body });
+    setLoading(false);
+    setDataSource(res?.data?.item || []);
+    setTotal(res?.data?.total || 0);
+    return res?.data?.item;
   }, []);
   const extraDetailAmend = useCallback(async (id: number, body: { score: number }) => {
     try {

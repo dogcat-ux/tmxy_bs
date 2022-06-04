@@ -1,5 +1,5 @@
 // @ts-ignore
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   Card,
   Col, InputNumber,
@@ -29,7 +29,8 @@ const ActivityDetail = () => {
   const activity = query;
   const firstPage = useState(1)[0];
   const firstPageSize = useState(10)[0];
-  const { pageSize, getDetailList, current, total, dataSource, loading, setCurrent, setPageSize } = useModel('detailCommon');
+  const { pageSize, getDetailList, current, total, loading, setCurrent, setPageSize } = useModel('detailCommon');
+  const [dataList,setDataList] = useState<any>([]);
   const columns = [
     {
       title: '学号',
@@ -99,7 +100,8 @@ const ActivityDetail = () => {
       page_size: pageSize || firstPageSize,
       ...body,
     };
-    getDetailList(activity?.activity_id, parms);
+    const data=await getDetailList(activity?.activity_id, parms);
+    setDataList(data);
   };
   const handleChange = async (page?: number, ps?: number) => {
     setCurrent(page || firstPage);
@@ -109,18 +111,10 @@ const ActivityDetail = () => {
       page_size: ps || firstPageSize,
     });
   };
-  // const onSearch = (value: string) => {
-  //   setSearch(value);
-  //   if (value) {
-  //     sendApi({ info: value });
-  //   } else {
-  //     sendApi();
-  //   }
-  // };
   useEffect(() => {
-    console.log(query);
-    Promise.all([sendApi()]);
+    sendApi();
   }, []);
+
   const routes = [
     {
       path: '',
@@ -135,7 +129,7 @@ const ActivityDetail = () => {
       breadcrumbName: activity?.activity_name,
     },
   ];
-  const AddForms = [
+  const AddForms = useMemo(()=>[
     {
       label: '学号',
       name: 'stu_number',
@@ -148,7 +142,7 @@ const ActivityDetail = () => {
       rules: [{ required: true }],
       children: <InputNumber/>,
     },
-  ];
+  ],[]);
   const onAddSubmit = async (data: extraAddParam) => {
     const res = await creatActivityDetail({ ...data, activity_id: query?.activity_id });
     feedBack(res, '增加成功！', '增加失败');
@@ -161,11 +155,6 @@ const ActivityDetail = () => {
         history.push('/activityCentre/activityLook');
       }}>
         <Card>
-          {/*<Row className="theme-margin-bottom">*/}
-          {/*  <Col span={8}>*/}
-          {/*    <Search placeholder="输入搜索内容" onSearch={onSearch} style={{ width: 200 }} allowClear/>*/}
-          {/*  </Col>*/}
-          {/*</Row>*/}
           <Row className="theme-margin-bottom">
             <Col span={5}>
               <CommonSearch sendApi={sendApi}/>
@@ -177,7 +166,7 @@ const ActivityDetail = () => {
               <AddForm buttonString="添加一条" formData={AddForms} onFinish={onAddSubmit}/>
             </Col>
           </Row>
-          <Table loading={loading} dataSource={dataSource || []} pagination={false} columns={columns}
+          <Table loading={loading} dataSource={dataList || []} pagination={false} columns={columns}
                  rowKey={record => Number(record.activity_id)}/>
           <div className="my-common-pagination">
             <Pagination
@@ -193,7 +182,6 @@ const ActivityDetail = () => {
           </div>
         </Card>
       </PageContainer>
-      {/*</PageHeader>*/}
     </>
   );
 };

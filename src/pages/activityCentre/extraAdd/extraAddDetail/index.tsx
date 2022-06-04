@@ -20,7 +20,7 @@ const ExtreAddDetail = () => {
   const history = useHistory();
   // @ts-ignore
   const { query } = history.location;
-  const { dataSource, loading, getExtraAddList, timeInfo, extraDetailAmend } = useModel('extraAddDetail');
+  const { loading, getExtraAddList, timeInfo, extraDetailAmend } = useModel('extraAddDetail');
   const [isAmended, setIsAmended] = useState(false);
   const [score, setScore] = useState<number>(0);
   const [ID, setID] = useState<number>();
@@ -38,6 +38,7 @@ const ExtreAddDetail = () => {
       breadcrumbName: query?.add_score_category,
     },
   ];
+  const [dataList,setDataList] = useState<any>([]);
   const { current, pageSize } = useModel('commonTable');
   const sendApi = async (body?: any) => {
     const parms = {
@@ -46,7 +47,8 @@ const ExtreAddDetail = () => {
       page_size: pageSize || firstPageSize,
       ...body,
     };
-    getExtraAddList({ ...parms });
+    const data=await getExtraAddList({ ...parms });
+    setDataList(data);
   };
   const columns = [
     {
@@ -86,9 +88,7 @@ const ExtreAddDetail = () => {
                                 onClick={() => {
                                   setIsAmended(!isAmended);
                                   extraDetailAmend(record?.extra_add_detail_id, { score });
-                                  setTimeout(() => {
-                                    sendApi();
-                                  }, 1000);
+                                  sendApi();
                                 }}
             /></>
         ) :
@@ -179,7 +179,7 @@ const ExtreAddDetail = () => {
             <AddForm buttonString="添加一条" formData={AddForms} onFinish={onAddSubmit}/>
           </Col>
         </Row>
-        <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={sendApi}
+        <CommonTable columns={columns} dataSource={dataList} loading={loading} sendApi={sendApi}
                      body={timeInfo ? { time_stamp: timeInfo }:null}/>
       </Card>
     </PageContainer>
