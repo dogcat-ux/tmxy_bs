@@ -9,25 +9,20 @@ export default () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<API.ActivityRes[]>([]);
   const getDetailList = useCallback(async (id: number, body: API.ActivityDetailListParam) => {
-    try {
-      setLoading(true);
-      const res = await activityDetailList(id, { ...body });
-      setDataSource(res?.data?.item || []);
-      setTotal(res?.data?.total || 0);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const res = await activityDetailList(id, { ...body });
+    setLoading(false);
+    setDataSource(res?.data?.item || []);
+    setTotal(res?.data?.total || 0);
+    return res?.data?.item;
   }, []);
-
   return {
     total,
     current,
     pageSize,
     setTotal,
     dataSource, setDataSource,
-    loading, search, setSearch,getDetailList,
+    loading, search, setSearch, getDetailList,
     setCurrent,
     setPageSize,
   };

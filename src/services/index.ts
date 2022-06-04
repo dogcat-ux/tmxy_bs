@@ -1,17 +1,15 @@
 import { message } from 'antd';
 import { extend } from 'umi-request';
-import { history } from 'umi';
 
 const request = extend({
-  // prefix: process.env.NODE_ENV === 'development' ? '/apl/' : 'http://1.12.252.83:3000/',
-  prefix: process.env.NODE_ENV === 'development' ? '/apl' : 'http://139.9.196.99:4000/',
+  prefix: process.env.NODE_ENV === 'development' ? '/apl/' : 'http://1.12.252.83:4000/',
 });
 
 request.interceptors.response.use((res) => {
   const codeMaps: Record<string, { msg: string; url?: string }> = {
     '401': {
       msg: 'Token Expired',
-      url: '/middle',
+      url: '/user/login',
     },
     '403': {
       msg: 'Failed to load resource',
@@ -25,10 +23,11 @@ request.interceptors.response.use((res) => {
   };
   if (res.status !== 200) {
     try {
-      const { msg, url } = codeMaps[res.status];
+      const { msg } = codeMaps[res.status];
       message.error(msg);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      url && history.push(url);
+      // if(url){
+      //   window.location.href=window.location.href.split("/")[0]+url;
+      // }
     } catch (e) {
       message.error(res.statusText);
     }

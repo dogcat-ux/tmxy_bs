@@ -18,10 +18,10 @@ const { Option } = Select;
 const { RangePicker } = DatePicker;
 const ActivityCheck = () => {
   const firstPage = useState(1)[0];
-  const [id,setId]=useState(-1);
+  const [id, setId] = useState(-1);
   const firstPageSize = useState(10)[0];
   const { categorys, getCategorys, dataSource, loading, getList, category1, activityTimeInfo, setCategory1, setActivityTimeInfo } = useModel('common');
-  const { current, pageSize, editData,setEditFormVisible } = useModel('commonTable');
+  const { current, pageSize, editData, setEditFormVisible } = useModel('commonTable');
   const data1 = category1 ? { category_name: category1 } : {};
   const data2 = activityTimeInfo ? {
     activity_start_time: activityTimeInfo.startTime,
@@ -47,7 +47,7 @@ const ActivityCheck = () => {
     }
   };
   const onAmend = (record: any) => {
-    setId(record?.activity_id)
+    setId(record?.activity_id);
   };
   const columns = [
     {
@@ -165,7 +165,6 @@ const ActivityCheck = () => {
       children: (
         <Input/>
       ),
-      // children: <CommonSelect defaultValue="" items={categorys?.map(value=>value.category_name)||[]} sendApi={(data) => {console.log(data);}}/>,
     },
     {
       label: '活动类型',
@@ -176,9 +175,9 @@ const ActivityCheck = () => {
       children: (
         <Select style={{ width: 120 }}>
           {
-            categorys?.map((value) => {
+            categorys?.map((value: API.categoryItem) => {
               // @ts-ignore
-              return <Option value={value.id} key={value.id}>{value.category_name}</Option>;
+              return <Option value={value.category_name} key={value.id}>{value.category_name}</Option>;
             })
           }
         </Select>
@@ -284,7 +283,7 @@ const ActivityCheck = () => {
     },
   ];
   const amendSubmit = async (data: any) => {
-    const res = await amendActivity(editData?.activity_id||id, {
+    const res = await amendActivity(editData?.activity_id || id, {
       ...data,
       sign_up_start_time: toTimeStamp(data?.signTime[0]),
       sign_up_end_time: toTimeStamp(data?.signTime[1]),

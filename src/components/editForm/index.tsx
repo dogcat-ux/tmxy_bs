@@ -18,10 +18,7 @@ interface EditFormProps {
 
 const EditForm: React.FC<EditFormProps> = ({ formData, onFinish }) => {
   const { setEditFormVisible, editFormVisible, clear } = useModel('commonTable');
-  // const [datas, setDatas] = useState({ ...editData });
   const onFinishFailed = (errorInfo: any) => {
-    console.log(errorInfo);
-    // message.error('提交失败!');
     Modal.error({
       content: '提交失败' + errorInfo?.errorFields[0].errors,
     });
@@ -52,7 +49,6 @@ const EditForm: React.FC<EditFormProps> = ({ formData, onFinish }) => {
                 name={value.name}
                 label={value.label}
                 rules={value.rules}
-                // initialValue={editData?editData[value.name]:''}
                 initialValue={value?.initialValue}
               >
                 {value.children}

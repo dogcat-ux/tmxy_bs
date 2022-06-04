@@ -23,6 +23,10 @@
     redirect: '/activityCentre/activityLook',
   },
   {
+    path: '/middle',
+    redirect: '/user/Login',
+  },
+  {
     path: '/activityCentre',
     redirect: '/activityCentre/activityLook',
   },
@@ -68,24 +72,6 @@
     path: '/userCentre',
     name: '用户中心',
     component: './userCentre',
-    // routes: [
-    //   {
-    //     path: '/userCentre/allScore',
-    //     component: './userCentre/allScore',
-    //   },
-    //   {
-    //     path: '/userCentre/activityScore',
-    //     component: './userCentre/activityScore',
-    //   },
-    //   {
-    //     path: '/userCentre/extraAddScore',
-    //     component: './userCentre/extraAddScore',
-    //   },
-    //   {
-    //     path: '/userCentre/extraDeduction',
-    //     component: './userCentre/extraDeduction',
-    //   },
-    // ],
   },
   {
     path: '/userCentre/allScore',
@@ -130,8 +116,20 @@
     ],
   },
   {
-    path: '/other',
-    redirect: '/other/carousel',
+    path: '/score',
+    name: '成绩中心',
+    routes: [
+      {
+        name: '绩点查看',
+        path: '/score/gpaLook',
+        component: './score/gpaLook',
+      },
+      {
+        name: '成绩查看',
+        path: '/score/scoreLook',
+        component: './score/scoreLook',
+      },
+    ],
   },
   {
     path: '/other',

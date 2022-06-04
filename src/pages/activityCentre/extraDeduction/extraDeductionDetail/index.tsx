@@ -17,16 +17,16 @@ import { extraDeductionDetailDeduction, extraDeductionDetailImport } from '@/ser
 import DeductionForm from '@/components/addForm';
 import { extraDeductionParam } from '@/services/extraDeduction/data';
 import feedBack from '@/utils/apiFeedback';
-import { extraAddDetailDelete } from '@/services/extraAdd';
 
 const ExtreDeductionDetail = () => {
   const history = useHistory();
   // @ts-ignore
   const { query } = history.location;
-  const { dataSource, loading, getExtraDeductionList, timeInfo, extraDetailAmend } = useModel('extraDeductionDetail');
+  const { loading, getExtraDeductionList, timeInfo, extraDetailAmend } = useModel('extraDeductionDetail');
   const [isAmended, setIsAmended] = useState(false);
   const [score, setScore] = useState<number>(0);
   const [ID, setID] = useState<number>();
+  const [dataList,setDataList] = useState<any>([]);
   const routes = [
     {
       path: '',
@@ -49,7 +49,8 @@ const ExtreDeductionDetail = () => {
       page_size: pageSize || firstPageSize,
       ...body,
     };
-    getExtraDeductionList({ ...parms });
+    const data=await getExtraDeductionList({ ...parms });
+    setDataList(data);
   };
   const columns = [
     {
@@ -188,7 +189,7 @@ const ExtreDeductionDetail = () => {
             <DeductionForm buttonString="添加一条" formData={DeductionForms} onFinish={onAddSubmit}/>
           </Col>
         </Row>
-        <CommonTable columns={columns} dataSource={dataSource} loading={loading} sendApi={sendApi}
+        <CommonTable columns={columns} dataSource={dataList} loading={loading} sendApi={sendApi}
                      body={timeInfo ? { time_stamp: timeInfo } : null}
                      deleteApi={(record: any) => extraDeductionDelete(record?.extra_add_detail_id)}/>
       </Card>

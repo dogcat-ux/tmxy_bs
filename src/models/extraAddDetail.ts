@@ -14,24 +14,16 @@ const ExtreAddDetail = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [dataSource, setDataSource] = useState<extraAddDetailListItem[]>([]);
   const getExtraAddList = useCallback(async (body?: extraAddDetailListParam) => {
-    try {
-      setLoading(true);
-      const res = await extraAddDetailList({ ...body });
-      setDataSource(res?.data?.item || []);
-      setTotal(res?.data?.total || 0);
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    const res = await extraAddDetailList({ ...body });
+    setLoading(false);
+    setDataSource(res?.data?.item || []);
+    setTotal(res?.data?.total || 0);
+    return res?.data?.item;
   }, []);
   const extraDetailAmend = useCallback(async (id: number, body: { score: number }) => {
-    try {
-      const res = await extraAddDetailAmend(id, { ...body });
-      feedBack(res, '修改成功', '修改失败');
-    } catch (e) {
-      console.log(e);
-    }
+    const res = await extraAddDetailAmend(id, { ...body });
+    feedBack(res, '修改成功', '修改失败');
   }, []);
   return {
     setTimeInfo, timeInfo,

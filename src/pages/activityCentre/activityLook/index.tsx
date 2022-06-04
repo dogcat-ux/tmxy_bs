@@ -188,7 +188,7 @@ const ActivityLook = () => {
           {
             categorys?.map((value) => {
               // @ts-ignore
-              return <Option value={value.id} key={value}>{value.category_name}</Option>;
+              return <Option value={value.category_name} key={value}>{value.category_name}</Option>;
             })
           }
         </Select>
@@ -271,7 +271,7 @@ const ActivityLook = () => {
       name: 'signTime',
       initialValue: [moment(dateChange(editData?.sign_up_start_time)), moment(dateChange(editData?.sign_up_end_time))],
       rules: [{ required: true }],
-      children: <RangePicker showTime={{ format: 'HH:mm' }} allowClear format="YYYY-MM-DD HH:mm"/>,
+      children: <RangePicker showTime={{ format: 'HH:mm' }} allowClear  format="YYYY-MM-DD HH:mm"/>,
     },
     {
       label: '活动时间',
